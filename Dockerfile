@@ -1,13 +1,18 @@
-# Use the official PostgreSQL image as the base image
-FROM postgres:13
+FROM jenkins/jenkins:lts
 
-# Set environment variables (optional)
-ENV POSTGRES_DB=mydb
-ENV POSTGRES_USER=myuser
-ENV POSTGRES_PASSWORD=mypassword
+USER root
 
-# Copy initialization scripts (optional)
-COPY init.sql /docker-entrypoint-initdb.d/
+RUN apt-get update -qq \
+    && apt-get install -qqy apt-transport-https ca-certificates curl gnupg2 software-properties-common
 
-# Expose the PostgreSQL port
-EXPOSE 5432
+RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+
+RUN add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+
+RUN apt-get update  -qq \
+    && apt-get -y install docker-ce
+
+RUN usermod -aG docker jenkins

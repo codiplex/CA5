@@ -1,0 +1,3 @@
+i200864->Created a Jenkins pipeline that checks for and pulls Docker images, then runs and links the contianers, also added post-execution cleanup.
+i200468->Created and uploaded the docker image of the Database service (CA4) by using the jenkinsfile.
+i200635->Created and uploaded the docker image of the Web service (CA4) by using the jenkinsfile.
