@@ -11,7 +11,7 @@ pipeline {
             steps {
                 script {
                     // Use the Docker Hub credentials stored in Jenkins
-                    withCredentials([usernamePassword(credentialsId: 'misfits-dockerhub-credentials', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_TOKEN')]) {
+                    withCredentials([usernamePassword(credentialsId: 'Docker-Codiplex', usernameVariable: 'DOCKERHUB_USER', passwordVariable: 'DOCKERHUB_TOKEN')]) {
                         sh 'docker login -u $DOCKERHUB_USER -p $DOCKERHUB_TOKEN'
                         DOCKERHUB_USERNAME = DOCKERHUB_USER
                     }
@@ -41,8 +41,8 @@ pipeline {
             steps {
                 script {
                     // Define the image names
-                    def frontendImageName = 'jawwadhabib/ca4-app:latest'
-                    def backendImageName = 'jawwadhabib/ca4-postgres:latest'
+                    def frontendImageName = 'codiplex/ca4-app:latest'
+                    def backendImageName = 'codiplex/ca4-postgres:latest'
 
                     // Check if the Docker images exist
                     def frontendImageExists = sh(script: "docker image ls -q ${frontendImageName}", returnStatus: true) == 0
@@ -63,8 +63,8 @@ pipeline {
             steps {
                 script {
                     // Run the Docker containers
-                    sh "docker run -d -p 5432:5432 --name ca4-postgres jawwadhabib/ca4-postgres:latest"
-                    sh "docker run -d -p 8080:5000 -e DATABASE_URL=${DATABASE_URL} --name ca4-app --link ca4-postgres jawwadhabib/ca4-app:latest"
+                    sh "docker run -d -p 5432:5432 --name ca4-postgres codiplex/ca4-postgres:latest"
+                    sh "docker run -d -p 8080:5000 -e DATABASE_URL=${DATABASE_URL} --name ca4-app --link ca4-postgres codiplex/ca4-app:latest"
                 }
             }
         }
