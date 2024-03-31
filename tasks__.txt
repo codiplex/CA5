@@ -1,2 +1,0 @@
-i200436->Created a Jenkins pipeline that checks for and pulls Docker images, then runs and links the contianers, also added post-execution cleanup.
-i200871->Created and uploaded the docker image of the Database service and Web service by using the jenkinsfile.
